@@ -11,6 +11,8 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,6 +23,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -28,6 +31,7 @@ import androidx.compose.material.Snackbar
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -37,10 +41,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import ir.dunijet.teamgit.R
@@ -49,7 +57,9 @@ import ir.dunijet.teamgit.ui.theme.cArrow
 import ir.dunijet.teamgit.ui.theme.cBackground
 import ir.dunijet.teamgit.ui.theme.cError
 import ir.dunijet.teamgit.ui.theme.cPrimary
+import ir.dunijet.teamgit.ui.theme.cText1
 import ir.dunijet.teamgit.ui.theme.cText2
+import ir.dunijet.teamgit.ui.theme.cText3
 import ir.dunijet.teamgit.ui.theme.cText5
 import ir.dunijet.teamgit.util.FadeInOutWidget
 import ir.dunijet.teamgit.util.NetworkChecker
@@ -187,6 +197,96 @@ fun HomeToolbar(
 }
 
 @Composable
+fun DevelopersIds() {
+
+    Column {
+        Developer(R.drawable.amir_mohammadi, "امیرحسین محمدی", "برنامه نویس اپ اندروید", "@dunijet")
+        Developer(R.drawable.omid_baharifar, "امید بهاری فر", "برنامه نویس پنل فرانت", "@weblax_ir")
+        Developer(R.drawable.erfan_yousefi, "عرفان یوسفی", "برنامه نویس بک اند", "@erfanyousefi.ir")
+        Developer(R.drawable.soroush_mosapoor, "سروش موسی\u200Cپور", "متخصص دِوآپس", "@codingcogs")
+    }
+
+}
+
+@Composable
+private fun Developer(
+    iconDrawableId: Int,
+    title: String,
+    detail: String,
+    page: String
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val uriHandler = LocalUriHandler.current
+
+    ConstraintLayout(modifier = Modifier
+        .fillMaxWidth()
+        .padding(bottom = 18.dp)
+        .clickable(
+            interactionSource = interactionSource,
+            indication = null
+        ) {
+            uriHandler.openUri("https://www.instagram.com/" + page.substring(1))
+        }) {
+
+        val (nameDeveloper, imgInsta, details) = createRefs()
+
+        Text(
+            modifier = Modifier
+                .constrainAs(nameDeveloper) {
+                    top.linkTo(imgInsta.top)
+                    start.linkTo(imgInsta.end)
+                }
+                .padding(start = 18.dp),
+            text = title,
+            color = cText1,
+            style = MaterialTheme.typography.h4
+        )
+
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+
+            Text(
+                modifier = Modifier
+                    .constrainAs(details) {
+                        top.linkTo(nameDeveloper.bottom)
+                        start.linkTo(imgInsta.end)
+                    }
+                    .padding(end = 18.dp, top = 2.dp),
+                text = detail + " - " + page,
+                color = cText3,
+                style = MaterialTheme.typography.overline
+            )
+
+
+        }
+
+        Box(modifier = Modifier
+            .constrainAs(imgInsta) {
+                top.linkTo(parent.top)
+                bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+            }
+            .padding(start = 16.dp), contentAlignment = Alignment.Center)
+        {
+
+            Image(
+                modifier = Modifier.size(52.dp),
+                painter = painterResource(id = R.drawable.ic_ring),
+                contentDescription = null
+            )
+
+            Image(
+                modifier = Modifier
+                    .size(45.dp)
+                    .clip(CircleShape),
+                painter = painterResource(id = iconDrawableId),
+                contentDescription = null
+            )
+
+        }
+    }
+}
+
+@Composable
 private fun DrawerMenuItem(
     iconDrawableId: Int,
     text: String
@@ -286,9 +386,7 @@ private fun DrawerMenuItem(
         ) {
 
             if (text == "اطلاعات توسعه دهندگان") {
-                Text(text = "سلام به همه دوستان گلم")
-
-//                DevelopersIds()
+                DevelopersIds()
             } else {
                 Text(text = "بوسه به همه دوستان گلم")
 
