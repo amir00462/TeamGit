@@ -23,6 +23,7 @@ import ir.dunijet.teamgit.di.myModules
 import ir.dunijet.teamgit.ui.fetures.BlogScreenUi
 import ir.dunijet.teamgit.ui.fetures.LargeImageScreen
 import ir.dunijet.teamgit.ui.fetures.home.HomeScreenUi
+import ir.dunijet.teamgit.ui.fetures.search.SearchScreenUi
 import ir.dunijet.teamgit.ui.theme.TeamGitTheme
 import ir.dunijet.teamgit.ui.theme.cBackground
 import ir.dunijet.teamgit.util.MyScreens
@@ -79,6 +80,10 @@ fun TeamGitApp() {
 
         composable(MyScreens.LargeImageScreen.route) {
             LargeImageScreen()
+        }
+
+        composable(MyScreens.SearchBlogScreen.route) {
+            SearchScreenUi()
         }
 
     }

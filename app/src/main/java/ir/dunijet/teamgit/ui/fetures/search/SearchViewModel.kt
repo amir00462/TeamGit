@@ -102,7 +102,6 @@ class SearchViewModel(private val blogRepository: BlogRepository) : ViewModel() 
                 }
             }
         }
-
     }
 
     fun setSearchQuery(str :String) {

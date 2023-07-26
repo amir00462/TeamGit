@@ -4,6 +4,7 @@ import ir.dunijet.teamgit.data.net.createApiService
 import ir.dunijet.teamgit.data.repository.BlogRepository
 import ir.dunijet.teamgit.data.repository.RetrofitBlogRepository
 import ir.dunijet.teamgit.ui.fetures.home.HomeViewModel
+import ir.dunijet.teamgit.ui.fetures.search.SearchViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -12,5 +13,6 @@ val myModules = module {
     single<BlogRepository> { RetrofitBlogRepository(get()) }
 
     viewModel { HomeViewModel(get()) }
+    viewModel { SearchViewModel(get()) }
 }
 
