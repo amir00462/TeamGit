@@ -1,4 +1,4 @@
-package ir.dunijet.teamgit.ui.fetures
+package ir.dunijet.teamgit.ui.fetures.home
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

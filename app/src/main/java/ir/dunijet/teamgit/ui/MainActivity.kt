@@ -1,5 +1,6 @@
 package ir.dunijet.teamgit.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -19,7 +20,9 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.burnoo.cokoin.Koin
 import dev.burnoo.cokoin.navigation.KoinNavHost
 import ir.dunijet.teamgit.di.myModules
-import ir.dunijet.teamgit.ui.fetures.HomeScreenUi
+import ir.dunijet.teamgit.ui.fetures.BlogScreenUi
+import ir.dunijet.teamgit.ui.fetures.LargeImageScreen
+import ir.dunijet.teamgit.ui.fetures.home.HomeScreenUi
 import ir.dunijet.teamgit.ui.theme.TeamGitTheme
 import ir.dunijet.teamgit.ui.theme.cBackground
 import ir.dunijet.teamgit.util.MyScreens
@@ -56,6 +59,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@SuppressLint("NewApi")
 @Composable
 fun TeamGitApp() {
 
@@ -69,6 +73,13 @@ fun TeamGitApp() {
             HomeScreenUi()
         }
 
+        composable(MyScreens.BlogScreen.route) {
+            BlogScreenUi()
+        }
+
+        composable(MyScreens.LargeImageScreen.route) {
+            LargeImageScreen()
+        }
 
     }
 }

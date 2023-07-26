@@ -1,8 +1,7 @@
-package ir.dunijet.teamgit.ui.fetures
+package ir.dunijet.teamgit.ui.fetures.home
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
