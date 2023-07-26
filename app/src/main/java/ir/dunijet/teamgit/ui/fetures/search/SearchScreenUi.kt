@@ -26,6 +26,7 @@ import ir.dunijet.teamgit.ui.theme.cBackground
 import ir.dunijet.teamgit.ui.widgets.HomeContent
 import ir.dunijet.teamgit.ui.widgets.HomeDrawer
 import ir.dunijet.teamgit.ui.widgets.HomeToolbar
+import ir.dunijet.teamgit.ui.widgets.SearchContent
 import ir.dunijet.teamgit.util.NO_FILTER
 import kotlinx.coroutines.launch
 
@@ -56,7 +57,7 @@ fun SearchScreenUi() {
             contentAlignment = Alignment.BottomCenter
         ) {
 
-            // SearchContent()
+             SearchContent(data)
 
             if (showFilterDialog) {
                 // SearchDialog()
