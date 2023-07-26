@@ -1,13 +1,28 @@
 package ir.dunijet.teamgit.ui.widgets
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Snackbar
 import androidx.compose.material.Text
@@ -15,11 +30,14 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -27,13 +45,16 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import ir.dunijet.teamgit.R
 import ir.dunijet.teamgit.data.model.Blog
+import ir.dunijet.teamgit.ui.theme.cArrow
 import ir.dunijet.teamgit.ui.theme.cBackground
 import ir.dunijet.teamgit.ui.theme.cError
+import ir.dunijet.teamgit.ui.theme.cPrimary
 import ir.dunijet.teamgit.ui.theme.cText2
 import ir.dunijet.teamgit.ui.theme.cText5
 import ir.dunijet.teamgit.util.FadeInOutWidget
 import ir.dunijet.teamgit.util.NetworkChecker
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun SnackBar(title: String) {
@@ -161,6 +182,177 @@ fun HomeToolbar(
         }, R.drawable.ic_menu) {
             onDrawerClicked.invoke()
         }
+    }
+
+}
+
+@Composable
+private fun DrawerMenuItem(
+    iconDrawableId: Int,
+    text: String
+) {
+
+    var rotation by remember { mutableFloatStateOf(0f) }
+    val scope = rememberCoroutineScope()
+    val rotationAnimation = remember { Animatable(0f) }
+
+    Column {
+
+        ConstraintLayout(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(
+                ) {
+
+                    scope.launch {
+
+                        if (rotation == 0f) {
+                            rotation = -90f
+
+                            rotationAnimation.animateTo(
+                                targetValue = -90f,
+                                animationSpec = tween(durationMillis = 300)
+                            )
+                        } else {
+                            rotation = 0f
+
+                            rotationAnimation.animateTo(
+                                targetValue = 0f,
+                                animationSpec = tween(durationMillis = 300)
+                            )
+                        }
+
+                    }
+
+                }
+                .padding(top = 14.dp, bottom = 14.dp)
+        ) {
+
+            val (title, arrow, detail) = createRefs()
+
+            Row(
+                modifier = Modifier
+                    .constrainAs(title) {
+                        start.linkTo(parent.start)
+                        top.linkTo(parent.top)
+                    }
+                    .fillMaxWidth()
+                    .padding(start = 18.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    painter = painterResource(iconDrawableId),
+                    tint = cPrimary,
+                    contentDescription = null,
+                )
+                Spacer(modifier = Modifier.width(14.dp))
+                Text(
+                    text = text,
+                    style = MaterialTheme.typography.subtitle2
+                )
+
+            }
+
+            Icon(
+                modifier = Modifier
+                    .constrainAs(arrow) {
+                        end.linkTo(parent.end, 25.dp)
+                        top.linkTo(title.top)
+                        bottom.linkTo(title.bottom)
+                    }
+                    .size(15.dp, 18.dp)
+                    .rotate(rotationAnimation.value),
+                tint = cArrow,
+                painter = painterResource(R.drawable.ic_arrow_left),
+                contentDescription = null,
+            )
+
+        }
+
+        AnimatedVisibility(
+            visible = rotation == -90f,
+
+            enter = slideInHorizontally(
+                initialOffsetX = { 30 },
+                animationSpec = tween(durationMillis = 300)
+            ) + fadeIn(animationSpec = tween(durationMillis = 300)),
+
+            exit = slideOutVertically(
+                targetOffsetY = { 30 },
+                animationSpec = tween(durationMillis = 300)
+            ) + fadeOut(animationSpec = tween(durationMillis = 300))
+
+        ) {
+
+            if (text == "اطلاعات توسعه دهندگان") {
+                Text(text = "سلام به همه دوستان گلم")
+
+//                DevelopersIds()
+            } else {
+                Text(text = "بوسه به همه دوستان گلم")
+
+//                AppInfo(
+//                    modifier = Modifier.padding(
+//                        top = 8.dp,
+//                        start = 18.dp,
+//                        end = 25.dp,
+//                        bottom = 16.dp
+//                    )
+//                )
+
+            }
+        }
+
+        //}
+
+    }
+
+}
+
+@Composable
+fun DrawerBody(modifier: Modifier) {
+    Column(modifier = modifier) {
+
+        DrawerMenuItem(
+            iconDrawableId = R.drawable.ic_code,
+            text = "اطلاعات توسعه دهندگان"
+        )
+
+        DrawerMenuItem(
+            iconDrawableId = R.drawable.ic_info,
+            text = "درباره برنامه",
+        )
+
+
+    }
+}
+
+@Composable
+fun HomeDrawer(onCloseDrawer: () -> Unit) {
+
+    BackHandler(onBack = onCloseDrawer)
+    ConstraintLayout(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
+        val (exit, body) = createRefs()
+
+        MainButton(modifier = Modifier.constrainAs(exit) {
+
+            top.linkTo(parent.top, 14.dp)
+            end.linkTo(parent.end, 16.dp)
+
+        }, src = R.drawable.ic_close) {
+            onCloseDrawer.invoke()
+        }
+
+        DrawerBody(modifier = Modifier.constrainAs(body) {
+            start.linkTo(parent.start)
+            top.linkTo(exit.bottom, 29.dp)
+        })
+
     }
 
 }
