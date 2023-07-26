@@ -10,19 +10,22 @@ import androidx.compose.runtime.setValue
 import dev.burnoo.cokoin.navigation.getNavController
 import ir.dunijet.teamgit.data.model.Blog
 import ir.dunijet.teamgit.ui.widgets.BlogToolbar
+import ir.dunijet.teamgit.util.Cache
+import ir.dunijet.teamgit.util.KEY_BLOG
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun BlogScreenUi() {
     val navigation = getNavController()
     var showInfoDialog by remember { mutableStateOf(false) }
+    val blog = Cache.get(KEY_BLOG)
 
     Scaffold(
 
         topBar = {
 
             BlogToolbar(
-                titleArticle = "" ,
+                titleArticle = blog.title ,
                 onBackPressed = { navigation.popBackStack() } ,
                 onInfoClicked = { showInfoDialog = true }
             )

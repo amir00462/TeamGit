@@ -33,7 +33,9 @@ import ir.dunijet.teamgit.ui.theme.cBackground
 import ir.dunijet.teamgit.ui.theme.cError
 import ir.dunijet.teamgit.ui.theme.cText2
 import ir.dunijet.teamgit.ui.theme.cText5
+import ir.dunijet.teamgit.util.Cache
 import ir.dunijet.teamgit.util.FadeInOutWidget
+import ir.dunijet.teamgit.util.KEY_BLOG
 import ir.dunijet.teamgit.util.MyScreens
 import ir.dunijet.teamgit.util.NetworkChecker
 import kotlinx.coroutines.delay
@@ -116,6 +118,7 @@ fun HomeContent(data: List<Blog>, onRequestRefresh: () -> Unit) {
                 },
                 data = data
             ) {
+                Cache.put(KEY_BLOG, it)
                 navigation.navigate(MyScreens.BlogScreen.route)
             }
 
@@ -125,8 +128,8 @@ fun HomeContent(data: List<Blog>, onRequestRefresh: () -> Unit) {
 
 @Composable
 fun HomeToolbar(
-    onDrawerClicked :() -> Unit ,
-    onSearchClicked :() -> Unit
+    onDrawerClicked: () -> Unit,
+    onSearchClicked: () -> Unit
 ) {
 
     ConstraintLayout(
