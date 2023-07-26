@@ -23,6 +23,7 @@ import ir.dunijet.teamgit.ui.theme.cBackground
 import ir.dunijet.teamgit.ui.widgets.HomeContent
 import ir.dunijet.teamgit.ui.widgets.HomeDrawer
 import ir.dunijet.teamgit.ui.widgets.HomeToolbar
+import ir.dunijet.teamgit.util.MyScreens
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -49,7 +50,7 @@ fun HomeScreenUi() {
                      }
                 },
                 onSearchClicked = {
-
+                    navigation.navigate(MyScreens.SearchBlogScreen.route)
                 }
             )
         },
