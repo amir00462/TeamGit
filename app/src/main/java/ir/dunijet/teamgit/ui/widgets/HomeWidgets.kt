@@ -56,7 +56,6 @@ fun SnackBar(title: String) {
             isVisible = false
         }
     }
-
 }
 
 @Composable
