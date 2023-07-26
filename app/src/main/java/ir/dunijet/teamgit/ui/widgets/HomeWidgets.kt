@@ -1,9 +1,11 @@
 package ir.dunijet.teamgit.ui.widgets
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
@@ -25,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import ir.dunijet.teamgit.R
 import ir.dunijet.teamgit.data.model.Blog
+import ir.dunijet.teamgit.ui.theme.cBackground
 import ir.dunijet.teamgit.ui.theme.cError
 import ir.dunijet.teamgit.ui.theme.cText2
 import ir.dunijet.teamgit.ui.theme.cText5
@@ -114,4 +117,50 @@ fun HomeContent(data: List<Blog>, onRequestRefresh: () -> Unit) {
 
         }
     }
+}
+
+@Composable
+fun HomeToolbar(
+    onDrawerClicked :() -> Unit ,
+    onSearchClicked :() -> Unit
+) {
+
+    ConstraintLayout(
+        modifier = Modifier.run {
+            fillMaxWidth()
+                .height(72.dp)
+                .background(cBackground)
+        }
+    ) {
+
+        val (search, drawer, imgMain) = createRefs()
+
+        Image(
+            modifier = Modifier.constrainAs(imgMain) {
+                top.linkTo(parent.top)
+                bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            },
+            painter = painterResource(id = R.drawable.ic_dunijet),
+            contentDescription = "dunijet pic"
+        )
+
+        MainButton(modifier = Modifier.constrainAs(search) {
+            top.linkTo(parent.top)
+            bottom.linkTo(parent.bottom)
+            end.linkTo(parent.end, 16.dp)
+        }, R.drawable.ic_search) {
+            onSearchClicked.invoke()
+        }
+
+        MainButton(modifier = Modifier.constrainAs(drawer) {
+            top.linkTo(parent.top)
+            bottom.linkTo(parent.bottom)
+            start.linkTo(parent.start, 16.dp)
+        }, R.drawable.ic_menu) {
+            onDrawerClicked.invoke()
+        }
+    }
+
 }

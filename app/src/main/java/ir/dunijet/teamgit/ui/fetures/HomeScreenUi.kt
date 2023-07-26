@@ -21,6 +21,7 @@ import dev.burnoo.cokoin.navigation.getNavController
 import dev.burnoo.cokoin.navigation.getNavViewModel
 import ir.dunijet.teamgit.ui.theme.cBackground
 import ir.dunijet.teamgit.ui.widgets.HomeContent
+import ir.dunijet.teamgit.ui.widgets.HomeToolbar
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -39,7 +40,14 @@ fun HomeScreenUi() {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
+            HomeToolbar(
+                onDrawerClicked = {
 
+                },
+                onSearchClicked = {
+
+                }
+            )
         },
         modifier = Modifier.fillMaxSize(),
         drawerGesturesEnabled = true,
