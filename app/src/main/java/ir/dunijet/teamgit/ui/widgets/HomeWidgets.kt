@@ -25,6 +25,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavController
+import dev.burnoo.cokoin.navigation.getNavController
 import ir.dunijet.teamgit.R
 import ir.dunijet.teamgit.data.model.Blog
 import ir.dunijet.teamgit.ui.theme.cBackground
@@ -32,6 +34,7 @@ import ir.dunijet.teamgit.ui.theme.cError
 import ir.dunijet.teamgit.ui.theme.cText2
 import ir.dunijet.teamgit.ui.theme.cText5
 import ir.dunijet.teamgit.util.FadeInOutWidget
+import ir.dunijet.teamgit.util.MyScreens
 import ir.dunijet.teamgit.util.NetworkChecker
 import kotlinx.coroutines.delay
 
@@ -63,6 +66,7 @@ fun SnackBar(title: String) {
 
 @Composable
 fun HomeContent(data: List<Blog>, onRequestRefresh: () -> Unit) {
+    val navigation = getNavController()
     val context = LocalContext.current
 
     if (!NetworkChecker(context).isInternetConnected)
@@ -112,7 +116,7 @@ fun HomeContent(data: List<Blog>, onRequestRefresh: () -> Unit) {
                 },
                 data = data
             ) {
-                // todo naviagte to blog screen (2)
+                navigation.navigate(MyScreens.BlogScreen.route)
             }
 
         }
