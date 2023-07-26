@@ -69,9 +69,9 @@ fun HomeContent(data: List<Blog>, onRequestRefresh: () -> Unit) {
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
     ) {
-        val (noBlog , articleList) = createRefs()
+        val (noBlog, articleList) = createRefs()
 
-        if(data.isEmpty()) {
+        if (data.isEmpty()) {
 
             Column(modifier = Modifier
                 .constrainAs(noBlog) {
@@ -102,12 +102,17 @@ fun HomeContent(data: List<Blog>, onRequestRefresh: () -> Unit) {
             }
         } else {
 
-
-
+            BlogList(
+                modifier = Modifier.constrainAs(articleList) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                },
+                data = data
+            ) {
+                // todo naviagte to blog screen (2)
+            }
 
         }
-
     }
-
-
 }
