@@ -27,6 +27,7 @@ import ir.dunijet.teamgit.ui.widgets.HomeContent
 import ir.dunijet.teamgit.ui.widgets.HomeDrawer
 import ir.dunijet.teamgit.ui.widgets.HomeToolbar
 import ir.dunijet.teamgit.ui.widgets.SearchContent
+import ir.dunijet.teamgit.ui.widgets.SearchDialog
 import ir.dunijet.teamgit.ui.widgets.SearchToolbar
 import ir.dunijet.teamgit.util.NO_FILTER
 import kotlinx.coroutines.launch
@@ -67,9 +68,17 @@ fun SearchScreenUi() {
             SearchContent(data)
 
             if (showFilterDialog) {
-                // SearchDialog()
+                 SearchDialog(
+                     filtering = filtering ,
+                     categoryList = categoryList ,
+                     authorList = authorList ,
+                     onDismissClicked = { showFilterDialog = false } ,
+                     onSubmitClicked = {
+                         isFilterEnabled = !(it.authors.isEmpty() && it.categories.isEmpty())
+                         viewModel.changeFiltering(it)
+                     }
+                 )
             }
-
         }
     }
 }
