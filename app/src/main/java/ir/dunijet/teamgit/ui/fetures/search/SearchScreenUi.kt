@@ -27,6 +27,7 @@ import ir.dunijet.teamgit.ui.widgets.HomeContent
 import ir.dunijet.teamgit.ui.widgets.HomeDrawer
 import ir.dunijet.teamgit.ui.widgets.HomeToolbar
 import ir.dunijet.teamgit.ui.widgets.SearchContent
+import ir.dunijet.teamgit.ui.widgets.SearchToolbar
 import ir.dunijet.teamgit.util.NO_FILTER
 import kotlinx.coroutines.launch
 
@@ -47,7 +48,13 @@ fun SearchScreenUi() {
 
     Scaffold(
         topBar = {
-            // SearchToolbar()
+            SearchToolbar(
+                edtValue = searchedQuery,
+                isFilteringEnabled = isFilterEnabled,
+                onEdtChanged = { viewModel.setSearchQuery(it) },
+                onFilterClicked = { showFilterDialog = true },
+                onBackPressed = { navigation.popBackStack() }
+            )
         },
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -57,7 +64,7 @@ fun SearchScreenUi() {
             contentAlignment = Alignment.BottomCenter
         ) {
 
-             SearchContent(data)
+            SearchContent(data)
 
             if (showFilterDialog) {
                 // SearchDialog()
