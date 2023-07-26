@@ -1,4 +1,4 @@
-package ir.dunijet.teamgit
+package ir.dunijet.teamgit.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
