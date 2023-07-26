@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.dunijet.teamgit.data.model.Blog
 import ir.dunijet.teamgit.data.repository.BlogRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -22,7 +23,6 @@ class HomeViewModel(private val blogRepository: BlogRepository) : ViewModel() {
 
     fun fetchBlogs() {
         viewModelScope.launch {
-
             _isLoading.value = true
 
             try {
@@ -32,6 +32,7 @@ class HomeViewModel(private val blogRepository: BlogRepository) : ViewModel() {
                 Log.v("TeamGitLog", ex.message ?: "exception in fetchBlogs()")
             }
 
+            delay(200)
             _isLoading.value = false
         }
     }
