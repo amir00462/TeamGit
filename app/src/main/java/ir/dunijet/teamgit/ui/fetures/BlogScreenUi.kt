@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import dev.burnoo.cokoin.navigation.getNavController
 import ir.dunijet.teamgit.data.model.Blog
 import ir.dunijet.teamgit.ui.widgets.BlogContent
+import ir.dunijet.teamgit.ui.widgets.BlogInfoDialog
 import ir.dunijet.teamgit.ui.widgets.BlogToolbar
 import ir.dunijet.teamgit.util.Cache
 import ir.dunijet.teamgit.util.KEY_BLOG
@@ -43,12 +44,10 @@ fun BlogScreenUi() {
             }
 
             if(showInfoDialog) {
-                // BlogInfoDialog()
+                 BlogInfoDialog(blog) {
+                     showInfoDialog = false
+                 }
             }
-
         }
-
     }
-
-
 }

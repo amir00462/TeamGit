@@ -1,5 +1,8 @@
 package ir.dunijet.teamgit.util
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalConfiguration
+
 fun String.toParagraph(size: Int): String {
 
     val stringBuilder = StringBuilder()
@@ -30,4 +33,18 @@ fun String.toParagraph(size: Int): String {
     }
 
     return stringBuilder.toString()
+}
+
+@Composable
+fun getCurrentOrientation(): Int {
+
+    // 0 ->  "Portrait"
+    // 1 -> "Landscape"
+
+    val configuration = LocalConfiguration.current
+    return if (configuration.screenWidthDp > configuration.screenHeightDp) {
+        1
+    } else {
+        0
+    }
 }
