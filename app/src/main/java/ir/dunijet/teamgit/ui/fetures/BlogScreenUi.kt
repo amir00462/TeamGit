@@ -51,7 +51,9 @@ fun BlogScreenUi() {
         Box(modifier = Modifier.fillMaxSize() , contentAlignment = Alignment.BottomCenter) {
 
             BlogContent(blog) {
+
                 navigation.navigate(MyScreens.LargeImageScreen.route)
+
             }
 
             if(showInfoDialog) {
